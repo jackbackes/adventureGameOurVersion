@@ -46,7 +46,7 @@ function ifYouDare() {
 	});
 }
 
-ifYouDare();
+//ifYouDare();
 
 /**
 
@@ -59,5 +59,32 @@ If you're running out of time, check out our solution to the problem:
 https://gist.github.com/queerviolet/7d9fb275b292b062fa5b9b4c99eda77d
 
 **/
+
+
+function ifYouDarePromise(node) {
+
+	if(!node.connections.length) {
+		console.log(node.text);
+		return Promise.resolve({node});
+	}
+
+
+	return inquirer.prompt({
+		name: 'response',
+		message: node.text,
+		type: 'list',
+		choices: node.connections
+	}).then(function (answer) {
+		console.log(answer);
+		return ifYouDarePromise(game.getNode(answer.response));
+		// if (answers.response === 'left') {left();
+		// } else if (answers.response === 'right') {
+		// 	console.log(game.nodes.rightResp.text)
+		// } else{ifYouDare()};
+	});
+}
+
+ifYouDarePromise(game.startingPoint)
+	.then(last => console.log('You fell in a pit and died anyhow.'));
 
 
