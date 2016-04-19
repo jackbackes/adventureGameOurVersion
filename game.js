@@ -6,10 +6,10 @@ var Game = function() {
 };
 
 Game.prototype.addNode = function(title, text) {
-	if (this.nodes[title]) throw new Error();
+	if (title in this.nodes) throw new Error();
 	this.nodes[title] = new Node(title, text);
 
-	if (Object.keys(this.nodes).length === 1) this.startingPoint = this.nodes[title]; 
+	if (!this.startingPoint) this.startingPoint = this.nodes[title]; 
 
 	return this.nodes[title];
 }
